@@ -132,8 +132,7 @@ The prediction window used here is 128 (as in 128 hours), but in fact, this can 
 </figure>
 <br />
 <br />
-<br />
-<br />
+
 
 ### 4.3 Search Metric
 To compare the latent vector in the search algorithm, three different metrics were used. Cosine similarity, Euclidean distance, and L1 distance. (For the distance functions, the similarity score was calculated as *1 - dist*). The table below shows the prediction error for the selected metrics. The prediction window for this evaluation was 192.
