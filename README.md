@@ -82,23 +82,29 @@ These are the training results for the VAE model.
 
 <figure>
   <img src="figures/loss_recon.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Reconstruction loss. From the validation plot, it can be seen that training the model for 20K iterations would've been enough.</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 2: Reconstruction loss. From the validation plot, it can be seen that training the model for 20K iterations would've been enough.</i></figcaption>
+</figure>
+<br> 
+<br> 
+
 </figure>
 <figure>
   <img src="figures/loss_kl.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Kullback–Leibler divergence loss</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 3: Kullback–Leibler divergence loss</i></figcaption>
 </figure>
-<br>
+<br> 
+<br> 
 
 <figure>
   <img src="figures/vae_output_viz_2.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : VAE reconstruction plot. It should be noted that reconstructing the input to the fullest is not something desiarble since we want the model to focus on the rich features and patterns. Learning to replicate noises and sharp movements does not enforce that.</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 4: VAE reconstruction plot. It should be noted that reconstructing the input to the fullest is not something desiarble since we want the model to focus on the rich features and patterns. Learning to replicate noises and sharp movements does not enforce that.</i></figcaption>
 </figure>
-<br>
+<br> 
+<br> 
 
 <figure>
   <img src="figures/vae_output_viz_3.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Kullback–Leibler divergence loss</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 5: Another reconstruction example</i></figcaption>
 </figure>
 
 
@@ -108,13 +114,14 @@ The prediction window used here is 256 (as in 256 hours), but in fact, this can 
 
 <figure>
   <img src="figures/forecast_1.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Forecast #1</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 6: Forecast #1</i></figcaption>
 </figure>
-<br>
+<br> 
+<br> 
 
 <figure>
   <img src="figures/forecast_2.png" width="100%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Forecast #2</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 7: Forecast #2</i></figcaption>
 </figure>
 
 
@@ -123,9 +130,10 @@ To compare the latent vector in the search algorithm, three different metrics we
 
 <figure>
   <img src="figures/dist_func_eval.png" width="80%" height="60%">
-  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Prediction error comparison for different similarity scorers</i></figcaption>
+  <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 8: Prediction error comparison for different similarity scorers</i></figcaption>
 </figure>
-<br>
+<br> 
+<br> 
 
 
 ## Discussion
