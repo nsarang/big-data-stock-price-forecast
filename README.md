@@ -2,11 +2,11 @@
 
 ## Table of Contents
 * [Abstract](#abstract)
-* [Introduction](#Introduction)
-* [Dataset](#Dataset)
-* [Method](#Method)
+* [Introduction](#introduction)
+* [Dataset](#dataset)
+* [Method](#method)
 * [Results](#results)
-* [Report](#Report)
+* [Report](#report)
 * [References](#references)
 
 
@@ -43,7 +43,7 @@ The symbols used for this project are BTC/USD, ETH/USD", "ETH/BTC", "LTC/BTC", "
   <img src="figures/btc_usdt_df.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 1: Bitcoin-US Dollar OHLCV sample data</i></figcaption>
 </figure>
-
+<br>
 
 ### 2.2 Collection
 The [Bitstamp](https://www.bitstamp.net/) cryptocurrency exchange was used as the main data source. While there are other exchanges such as Binance, Coinbase and ByBit that have higher trading volume and liquidity, Bitstamp provides the most access to the historical data. The exchange provides a public REST API for downloading the data, without the need to register an account. For sending the requests, I used the [CCXT](https://github.com/ccxt/ccxt) Python package which provides a unified front for interacting with many cryptocurrency exchanges. 
@@ -88,12 +88,13 @@ These are the training results for the VAE model.
   <img src="figures/loss_kl.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Kullback–Leibler divergence loss</i></figcaption>
 </figure>
-
+<br>
 
 <figure>
   <img src="figures/vae_output_viz_2.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : VAE reconstruction plot. It should be noted that reconstructing the input to the fullest is not something desiarble since we want the model to focus on the rich features and patterns. Learning to replicate noises and sharp movements does not enforce that.</i></figcaption>
 </figure>
+<br>
 
 <figure>
   <img src="figures/vae_output_viz_3.png" width="100%" height="60%">
@@ -109,6 +110,7 @@ The prediction window used here is 256 (as in 256 hours), but in fact, this can 
   <img src="figures/forecast_1.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Forecast #1</i></figcaption>
 </figure>
+<br>
 
 <figure>
   <img src="figures/forecast_2.png" width="100%" height="60%">
@@ -123,7 +125,7 @@ To compare the latent vector in the search algorithm, three different metrics we
   <img src="figures/dist_func_eval.png" width="80%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure : Prediction error comparison for different similarity scorers</i></figcaption>
 </figure>
-
+<br>
 
 
 ## Discussion
