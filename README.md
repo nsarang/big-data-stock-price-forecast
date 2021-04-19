@@ -1,3 +1,4 @@
+# Stock Price Prediction Using Historical Patterns
 
 
 ## Table of Contents
@@ -14,8 +15,7 @@ In this project, I aim to automate the detection of geometric patterns and recur
 
 
 ## Introduction
-Patterns are recurring sequences found in candlestick charts which traders have historically used as buy and sell signals. Those who follow the technical analysis strategy most often use geometric features and patterns the describe a phenomenon. Some of the famous patterns are the Ascending triangle, Double top/bottom, Cup and handle, and Head and shoulders. With the advent of machine learning, there's been work to facilitate and enhance this process [3, 4].
-Automation would simplify the process of finding sequences that vary in scale and length. It would also help provide valuable information for stock market price prediction as these signals do offer a small correlation with prices. Alone, the patterns are not enough to predict trends but may yield different results when coupled with other indicators. While I am presenting this project as a price forecasting tool, the output can also be used as a feature for other pipelines and methods.  
+Patterns are recurring sequences found in candlestick charts which traders have historically used as buy and sell signals. Those who follow the technical analysis strategy most often use geometric features and patterns that try to describe a certain phenomenon. Some of the famous patterns are the Ascending triangle, Double top/bottom, Cup and handle, and Head and shoulders [1, 2]. With the advent of machine learning, there's been work to facilitate and enhance this process [3, 4]. If human eye can find these patterns, can a machine learning algorithm do the same? or perhaps even better? Automation would simplify the process of finding sequences that vary in scale and length. It would also help provide valuable information for stock market price prediction as these signals do offer a small correlation with prices. Alone, the patterns are not enough to predict trends but may yield different results when coupled with other indicators. While I am presenting this project as a price forecasting tool, the output can also be used as a feature for other pipelines and methods.  
 
 In this project, the general approach for forecasting the price is as follow:
 1. Given a time-series Q1 of the current price of symbol X, we'd like to look for a similar time-series in our historical price database.
@@ -28,8 +28,7 @@ There are a few challenges here:
 2. How fast is this approach?
 3. How can the outcome be interpreted?
 
-By solving these challenges, we can predict futures prices using historical patterns.
-                
+By solving these challenges, we can predict futures prices using historical patterns. In the following sections I am going to explain the methodology used in this work and the steps done to pre-process the data based on our need. In the last section I will provide the results of my experiments and discuss the future work.
             
 
 
@@ -65,7 +64,7 @@ The prediction pipeline consists of 3 main steps:
 To measure the similarity between a pair of time-series, they must first be encoded to a latent vector. The reasons for encoding are two folds: First, it reduces the dimension of the data which would result in the reduction of computation and storage cost. Secondly, We want to only keep the rich features of the data and remove as much noise as possible. This would be an important step since financial data are known to be noisy.
 To encode the data, I’ve used a Variational Autoencoder (VAE) [5], a neural network, implemented in PyTorch. Since it's an autoencoder-class model, its architecture is almost symmetrical. On one side, 1D convolutions with linear layers are used and on the opposite side, linear layers with transposed convolution. LeakyReLU nonlinearity was used as the activation function since we want the activation maps to also have negative signs. That is because the inputs and sampled data from encoding the input are in the [-1, 1] range. For optimizing the network, AdaBelief [6] was used.
 
-After training the VAE model, we can pre-compute the latent vector of every data point in the dataset and use it to find recurring patterns.
+The training was done using [PyTorch Lightning](https://www.pytorchlightning.ai/) which faciliates the distributed training pipeline. After training the VAE model, we can pre-compute the latent vector of every data point in the dataset and use it to find recurring patterns.
 
 ### 3.2 Similarity Search
 Given a query time-series, we first transform it to the latent space and then compare its latent vector with the other data points by using a distance metric. The choice of the metric is subject to test and evaluation. 
@@ -115,7 +114,7 @@ These are the training results for the VAE model.
 <br />
 
 ### 4.2 Forecasting
-The prediction window used here is 256 (as in 256 hours), but in fact, this can an arbitrary number, irrespective of what encoding window was for the training part. The forecasts below are done by calculating the average between the best match and second-best match. The vertical line divides between the query and predicted data.
+The prediction window used here is 128 (as in 128 hours), but in fact, this can an arbitrary number, irrespective of what encoding window was for the training part. The forecasts below are done by calculating the average between the best match and second-best match. The vertical line divides between the query and predicted data. While the results look promising, there's still much more room for improvements.
 
 
 <figure>
@@ -137,7 +136,7 @@ The prediction window used here is 256 (as in 256 hours), but in fact, this can 
 <br />
 
 ### 4.3 Search Metric
-To compare the latent vector in the search algorithm, three different metrics were used. Cosine similarity, Euclidean distance, and L1 distance. (For the distance functions, the similarity score was calculated as *1 - dist*). The table below shows the prediction error for the selected metrics.
+To compare the latent vector in the search algorithm, three different metrics were used. Cosine similarity, Euclidean distance, and L1 distance. (For the distance functions, the similarity score was calculated as *1 - dist*). The table below shows the prediction error for the selected metrics. The prediction window for this evaluation was 192.
 
 <figure>
   <img src="figures/dist_func_eval.png" width="80%" height="60%">
