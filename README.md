@@ -6,7 +6,6 @@
 * [Dataset](#dataset)
 * [Method](#method)
 * [Results](#results)
-* [Report](#report)
 * [References](#references)
 
 
@@ -34,9 +33,9 @@ By solving these challenges, we can predict futures prices using historical patt
             
 
 
-## 2 Dataset
+## Dataset
 ### 2.1 Summary
-The data are the hourly OHLCVs of several cryptocurrency symbols. OHLCV is an aggregated form of market data standing for Open, High, Low, Close, and Volume. the Open and Close represent the first and the last price level during a specified interval. High and Low represent the highest and lowest reached price during that interval. Volume is the total amount traded during that period. This data is most frequently represented in a candlestick chart, which allows traders to perform technical analysis on intraday values [6].
+The data are the hourly OHLCVs of several cryptocurrency symbols. OHLCV is an aggregated form of market data standing for Open, High, Low, Close, and Volume. the Open and Close represent the first and the last price level during a specified interval. High and Low represent the highest and lowest reached price during that interval. Volume is the total amount traded during that period. This data is most frequently represented in a candlestick chart, which allows traders to perform technical analysis on intraday values [7].
 The symbols used for this project are BTC/USD, ETH/USD", "ETH/BTC", "LTC/BTC", "LTC/USD", "XRP/USD", "XRP/BTC". The period of interest for BTC/USD and other symbols was from 2015-01 to 2021-04 and o2017-06 to 2021-04 respectively.
 
 <figure>
@@ -59,12 +58,12 @@ Standardization: When comparing time-series of different periods of time, and po
 
 
 
-## 3 Method
+## Method
 The prediction pipeline consists of 3 main steps:
 
 ### 3.1 Encoding
 To measure the similarity between a pair of time-series, they must first be encoded to a latent vector. The reasons for encoding are two folds: First, it reduces the dimension of the data which would result in the reduction of computation and storage cost. Secondly, We want to only keep the rich features of the data and remove as much noise as possible. This would be an important step since financial data are known to be noisy.
-To encode the data, I’ve used a Variational Autoencoder (VAE) [2], a neural network, implemented in PyTorch. Since it's an autoencoder-class model, its architecture is almost symmetrical. On one side, 1D convolutions with linear layers are used and on the opposite side, linear layers with transposed convolution. LeakyReLU nonlinearity was used as the activation function since we want the activation maps to also have negative signs. That is because the inputs and sampled data from encoding the input are in the [-1, 1] range. For optimizing the network, AdaBelief [4] was used.
+To encode the data, I’ve used a Variational Autoencoder (VAE) [5], a neural network, implemented in PyTorch. Since it's an autoencoder-class model, its architecture is almost symmetrical. On one side, 1D convolutions with linear layers are used and on the opposite side, linear layers with transposed convolution. LeakyReLU nonlinearity was used as the activation function since we want the activation maps to also have negative signs. That is because the inputs and sampled data from encoding the input are in the [-1, 1] range. For optimizing the network, AdaBelief [6] was used.
 
 After training the VAE model, we can pre-compute the latent vector of every data point in the dataset and use it to find recurring patterns.
 
@@ -84,29 +83,36 @@ These are the training results for the VAE model.
   <img src="figures/loss_recon.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 2: Reconstruction loss. From the validation plot, it can be seen that training the model for 20K iterations would've been enough.</i></figcaption>
 </figure>
-<br> 
-<br> 
+<br />
+<br />
+<br />
+<br />
 
 </figure>
 <figure>
   <img src="figures/loss_kl.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 3: Kullback–Leibler divergence loss</i></figcaption>
 </figure>
-<br> 
-<br> 
+<br />
+<br />
+<br />
+<br />
 
 <figure>
   <img src="figures/vae_output_viz_2.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 4: VAE reconstruction plot. It should be noted that reconstructing the input to the fullest is not something desiarble since we want the model to focus on the rich features and patterns. Learning to replicate noises and sharp movements does not enforce that.</i></figcaption>
 </figure>
-<br> 
-<br> 
+<br />
+<br />
+<br />
+<br />
 
 <figure>
   <img src="figures/vae_output_viz_3.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 5: Another reconstruction example</i></figcaption>
 </figure>
-
+<br />
+<br />
 
 ### Forecasting
 The prediction window used here is 256 (as in 256 hours), but in fact, this can an arbitrary number, irrespective of what encoding window was for the training part. The forecasts below are done by calculating the average between the best match and second-best match. The vertical line divides between the query and predicted data.
@@ -116,14 +122,19 @@ The prediction window used here is 256 (as in 256 hours), but in fact, this can 
   <img src="figures/forecast_1.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 6: Forecast #1</i></figcaption>
 </figure>
-<br> 
-<br> 
+<br />
+<br />
+<br />
+<br />
 
 <figure>
   <img src="figures/forecast_2.png" width="100%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 7: Forecast #2</i></figcaption>
 </figure>
-
+<br />
+<br />
+<br />
+<br />
 
 ### Search Metric
 To compare the latent vector in the search algorithm, three different metrics were used. Cosine similarity, Euclidean distance, and L1 distance. (For the distance functions, the similarity score was calculated as *1 - dist*). The table below shows the prediction error for the selected metrics.
@@ -132,8 +143,8 @@ To compare the latent vector in the search algorithm, three different metrics we
   <img src="figures/dist_func_eval.png" width="80%" height="60%">
   <figcaption style="text-align: center; margin: 5px auto; margin-bottom: 50px;"><i>Figure 8: Prediction error comparison for different similarity scorers</i></figcaption>
 </figure>
-<br> 
-<br> 
+<br />
+<br />
 
 
 ## Discussion
@@ -161,4 +172,4 @@ The current pipeline works very fast with few symbols, but if were to add severa
 
 [6] Zhuang, Juntang, et al. "Adabelief optimizer: Adapting stepsizes by the belief in observed gradients." arXiv preprint arXiv:2010.07468 (2020).
 
-[7] [Cryptocurrency OHLCV Data](https://www.kaiko.com/collections/ohlcv)
+[7] "Cryptocurrency OHLCV Data," https://www.kaiko.com/collections/ohlcv
