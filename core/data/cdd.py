@@ -10,28 +10,8 @@ from core.config.defaults import DATA_DIR
 from .utils import timeframe_to_timedelta, historical_to_dataframe
 
 
-def create_exchange():
-    exchange = ccxt.binance(  # first binance account
-        {
-            "apiKey": "jxlzo1mxQ1PDckz4aYgH2WDgFxpJjBu47r3OB4vyLyZkEeyJ4xjOM6m32mvsIgmu",
-            "secret": "EffQgaLRPl52q0YEpVKcIHDeqyrFBQWm2K1Er99egbQ1c75X7fDREg4UtzhSaCJM",
-            "enableRateLimit": True,
-            "options": {
-                "defaultType": "spot",  # spot, future, margin
-            },
-        }
-    )
-    return exchange
-
-
 def get_historical_data(
-    symbol,
-    exchange,
-    timeframe,
-    start_date=None,
-    total=None,
-    max_per_page=500,
-    timezone=None,
+    symbol, exchange, timeframe, start_date=None, total=None, max_per_page=500, timezone=None,
 ):
     """Get historical OHLCV for a symbol pair
 
@@ -59,8 +39,7 @@ def get_historical_data(
             )
     except AttributeError:
         print(
-            "%s interface does not support timeframe queries! We are unable to fetch data!",
-            exchange,
+            "%s interface does not support timeframe queries! We are unable to fetch data!", exchange,
         )
         raise AttributeError(sys.exc_info())
 
@@ -75,9 +54,7 @@ def get_historical_data(
     try:
         cursor = start_date
         while True:
-            ohlcv = exchange.fetch_ohlcv(
-                symbol, timeframe=timeframe, since=cursor, limit=max_per_page
-            )
+            ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=cursor, limit=max_per_page)
             if (not ohlcv) or len(ohlcv) == 0:
                 break
             historical_data += ohlcv
@@ -106,7 +83,7 @@ def get_crypto_dataset(
     data_frame=None,
     start_date=datetime(2017, 1, 1),
     retry_skip_delta=timedelta(days=10),
-    **kwargs
+    **kwargs,
 ):
     if data_fp is None:
         save_dir = os.path.join(DATA_DIR, exchange.name.lower())
@@ -123,11 +100,7 @@ def get_crypto_dataset(
         return old_data
         last_date = old_data.datetime.iloc[-2]
         data = get_historical_data(
-            symbol=symbol,
-            exchange=exchange,
-            timeframe=timeframe,
-            start_date=last_date,
-            **kwargs
+            symbol=symbol, exchange=exchange, timeframe=timeframe, start_date=last_date, **kwargs
         )
         data = data.reset_index()
         data["datetime"] = pd.to_datetime(data["datetime"])
@@ -138,12 +111,7 @@ def get_crypto_dataset(
 
     else:
         while True:
-            data = get_historical_data(
-                symbol=symbol,
-                exchange=exchange,
-                timeframe=timeframe,
-                start_date=start_date,
-            )
+            data = get_historical_data(symbol=symbol, exchange=exchange, timeframe=timeframe, start_date=start_date,)
             if data is None:
                 start_date += retry_skip_delta
             else:
