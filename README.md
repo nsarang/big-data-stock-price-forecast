@@ -76,7 +76,7 @@ After finding a similar match in the dataset, we will use its original time-seri
 
 
 ## Results
-### VAE Model
+### 4.1 VAE Model
 These are the training results for the VAE model.
 
 <figure>
@@ -114,7 +114,7 @@ These are the training results for the VAE model.
 <br />
 <br />
 
-### Forecasting
+### 4.2 Forecasting
 The prediction window used here is 256 (as in 256 hours), but in fact, this can an arbitrary number, irrespective of what encoding window was for the training part. The forecasts below are done by calculating the average between the best match and second-best match. The vertical line divides between the query and predicted data.
 
 
@@ -136,7 +136,7 @@ The prediction window used here is 256 (as in 256 hours), but in fact, this can 
 <br />
 <br />
 
-### Search Metric
+### 4.3 Search Metric
 To compare the latent vector in the search algorithm, three different metrics were used. Cosine similarity, Euclidean distance, and L1 distance. (For the distance functions, the similarity score was calculated as *1 - dist*). The table below shows the prediction error for the selected metrics.
 
 <figure>
